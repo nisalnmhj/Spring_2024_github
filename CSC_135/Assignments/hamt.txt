@@ -1,0 +1,41 @@
+hamt uses
+hamt with no parameter creates a empty tree.
+call hamt to create a leaf node with one parameter
+use hamt to make a copy of the interior of the tree. In that cas pass an item and list of children
+ 
+_updatechild:
+calling _updatechild means you want to copy that node
+you pass two arguments i and x
+i = which child ( or index of that child) you want to update
+x = reference you want to updated with 
+
+_add:
+if you add item that already exits, it returns None.
+childnum = bottom two bits
+shiftedhashbits = shift to right two bits
+children[childnum] ----> if None then add a leaf Node
+children[childnum] ----> if not None then continue search:
+
+newchild = self._children[childnum].add(item, shiftedhashbits)
+                           ^
+                           |
+            ( new node added in this palce)
+
+
+
+def __next__(self):
+        '''if not self.queue:
+            raise StopIteration
+        node = self.queue.popleft()
+        for child in node._children:
+            if child is not None:
+                self.queue.append(child)
+        return node._item'''
+        while self.queue:
+            node = self.queue.popleft()
+            if node is not None:
+                yield node._item
+                for child in node._children:
+                    if child is not None:
+                        self.queue.append(child)
+        raise StopIteration
